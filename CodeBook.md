@@ -1,6 +1,6 @@
 # Code Book
 
-## Data information
+## Raw data information
 
 The following data set information was obtained from http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
@@ -43,7 +43,7 @@ The summary set contains the means of features by activity and subject
 
 ### Columns
 * Subject - A numeric ID representing a participant
-* Activity - The type of activity being performed
+* Activity - The type of activity being performed (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING)
 * Domain - Whether the feature is a measurement of time or frequency (Time or Frequency)
 * Signal - Whether the signal is from body or gravity (Body or Gravity)
 * Instrument - Measurement instrument (Accelerometer or Gyroscope)

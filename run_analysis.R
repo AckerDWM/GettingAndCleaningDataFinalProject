@@ -63,7 +63,7 @@ colnames(tidier) <- c("Subject", "Activity", "Domain", "Signal",
 
 for (i in 3:68) {
   tidier.range <- (((i - 3)* 180 + 1) : ((i - 2) * 180))
-  name <- colnames(tidy)[i]
+  name <- colnames(tidy.data)[i]
   
   if (grepl("Frequency", name)) {
     tidier$Domain[tidier.range] <- "Frequency"
@@ -109,10 +109,16 @@ for (i in 3:68) {
     tidier$Direction[tidier.range] <- "Y"
   }
   
-  tidier$Subject[tidier.range] <- tidy$subject
-  tidier$Activity[tidier.range] <- tidy$activity
-  tidier$Average[tidier.range] <- tidy[name][[1]]
+  tidier$Subject[tidier.range] <- tidy.data$subject
+  tidier$Activity[tidier.range] <- tidy.data$activity
+  tidier$Average[tidier.range] <- tidy.data[name][[1]]
 }
+
+# add meaninful activity names to the tidy dataset
+tidier$Activity <- factor(
+  tidier$Activity,
+  levels=activities$V1,
+  labels=as.character(activities$V2))
 
 # write the summarized data to a file
 write.table(tidier, "tidy_data.txt", row.names=FALSE)
