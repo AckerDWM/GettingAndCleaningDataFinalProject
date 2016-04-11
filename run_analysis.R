@@ -57,6 +57,9 @@ colnames(tidy.data)[1:2] <- c("activity", "subject")
 # write the summarized data to a file
 write.table(tidy.data, "tidy_data.txt", row.names=FALSE)
 
+library(knitr)
+knit2html("codebook.Rmd");
+
 
 
 
