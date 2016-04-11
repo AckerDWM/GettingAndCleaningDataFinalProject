@@ -45,7 +45,6 @@ The first row is a header containing the names of variables
 * Columns 3-68: each column represents a measured feature
 
 #### Naming conventions for columns 3-68:
-* 
 * "mean()" represents a mean value
 * "std()" represents a standard deviation value
 * A trailing "X", "Y", or "Z" represents the direction measured

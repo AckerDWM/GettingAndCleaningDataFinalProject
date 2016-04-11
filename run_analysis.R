@@ -57,9 +57,67 @@ colnames(tidy.data)[1:2] <- c("activity", "subject")
 # write the summarized data to a file
 write.table(tidy.data, "tidy_data.txt", row.names=FALSE)
 
-library(knitr)
-knit2html("codebook.Rmd");
+require(dplyr)
+require(tidyr)
+tidy <- tbl_df(tidy.data)
 
+tidier <- as.data.frame(matrix(nrow=180*66, ncol=10))
+colnames(tidier) <- c('Subject', 'Activity', 'Domain', 'Signal',
+                      'Instrument', 'Variable', 'Magnitude', 
+                      "Jerk", 'Direction', 'Average')
+
+for (i in 3:68) {
+  tidier.range <- (((i - 3)* 180 + 1) : ((i - 2) * 180))
+  name <- colnames(tidy)[i]
+  
+  if (grepl("Frequency", name)) {
+    tidier$Domain[tidier.range] <- "Frequency"
+  } else {
+    tidier$Domain[tidier.range] <- "Time"
+  }
+  
+  if (grepl("Body", name)) {
+    tidier$Signal[tidier.range] <- "Body"
+  } else {
+    tidier$Signal[tidier.range] <- "Gravity"
+  }
+  
+  if (grepl("Accelerometer", name)) {
+    tidier$Instrument[tidier.range] <- "Accelerometer"
+  } else {
+    tidier$Instrument[tidier.range] <- "Gyroscope"
+  }
+  
+  if (grepl("mean", name)) {
+    tidier$Variable[tidier.range] <- "Mean"
+  } else {
+    tidier$Variable[tidier.range] <- "Standard.deviation"
+  }
+  
+  if (grepl("Jerk", name)) {
+    tidier$Jerk[tidier.range] <- TRUE
+  } else {
+    tidier$Jerk[tidier.range] <- FALSE
+  }
+  
+  if (grepl("Magnitude", name)) {
+    tidier$Magnitude[tidier.range] <- TRUE
+  } else {
+    tidier$Magnitude[tidier.range] <- FALSE
+  }
+  
+  if (grepl("-Z", name)) {
+    tidier$Direction[tidier.range] <- "Z"
+  } else if (grepl("-X", name)) {
+    tidier$Direction[tidier.range] <- "X"
+  } else if (grepl("-Y", name)) {
+    tidier$Direction[tidier.range] <- "Y"
+  }
+  
+  tidier$Subject[tidier.range] <- tidy$subject
+  tidier$Activity[tidier.range] <- tidy$activity
+  tidier$Average[tidier.range] <- tidy[name][[1]]
+}
 
 
 
