@@ -54,17 +54,12 @@ tidy.data <- aggregate(
   mean)
 colnames(tidy.data)[1:2] <- c("activity", "subject")
 
-# write the summarized data to a file
-write.table(tidy.data, "tidy_data.txt", row.names=FALSE)
-
-require(dplyr)
-require(tidyr)
-tidy <- tbl_df(tidy.data)
-
+# create a tidier version of the summarized data, spliting variables
+# accross rows when multiple are present in a single column
 tidier <- as.data.frame(matrix(nrow=180*66, ncol=10))
-colnames(tidier) <- c('Subject', 'Activity', 'Domain', 'Signal',
-                      'Instrument', 'Variable', 'Magnitude', 
-                      "Jerk", 'Direction', 'Average')
+colnames(tidier) <- c("Subject", "Activity", "Domain", "Signal",
+                      "Instrument", "Variable", "Magnitude", 
+                      "Jerk", "Direction", "Average")
 
 for (i in 3:68) {
   tidier.range <- (((i - 3)* 180 + 1) : ((i - 2) * 180))
@@ -119,6 +114,8 @@ for (i in 3:68) {
   tidier$Average[tidier.range] <- tidy[name][[1]]
 }
 
+# write the summarized data to a file
+write.table(tidier, "tidy_data.txt", row.names=FALSE)
 
 
 
