@@ -1,6 +1,6 @@
 # Code Book
 
-## Data information
+## Raw data information
 
 The following data set information was obtained from http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
